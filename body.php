@@ -8,31 +8,35 @@ $fetchResult = mysqli_query($conn, $fetchSql);
 ?>
 <link rel="stylesheet" href="style.css">
 
-<main class="mx-auto w-75 d-flex">
-    <div class="w-75 border-end">
+
+<main class="row container-lg mx-auto ">
+    <div class=" border-end col-lg-8">
         <?php
         while ($result = mysqli_fetch_assoc($fetchResult)) {
         ?>
             <div class="card d-flex m-2 p-2">
+                <div>
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                        alt=""
+                        class="image">
+                    <span><a href="viewOthersProfile.php" class="text-decoration-none text-dark"><?php echo $result['username'] ?></a></span>
+                </div>
                 <a href="read-blog.php?id=<?php echo $result['post_id'] ?>"
-                class="text-decoration-none text-dark"
-                >
-                    <div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                            alt=""
-                            class="image">
-                        <span><?php echo $result['username'] ?></span>
-                    </div>
+                    class="text-decoration-none text-dark">
                     <div class="d-flex">
                         <div class="w-75">
-                            <h2><?php echo $result['title'] ?></h2>
+                            <h2 class="fw-bolder"><?php echo $result['title'] ?></h2>
                             <h4><?php echo $result['content'] ?></h4>
                         </div>
                         <div class="w-25 object-fit-fill">
-                            <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" alt="" class="w-100">
+                            <img src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-beach-free-image-after-sunset-sky-free-photo.jpeg?w=600&quality=80" alt="image" class="w-100">
                         </div>
                     </div>
-                    <div><?php echo $result['created_at'] ?></div>
+                    <div class="d-flex gap-4">
+                        <div><?php echo $result['created_at'] ?></div>
+                        <div>👍1</div>
+                        <div>💬 2</div>
+                    </div>
                 </a>
             </div>
         <?php
@@ -41,7 +45,7 @@ $fetchResult = mysqli_query($conn, $fetchSql);
 
     </div>
 
-    <div class="m-2 p-2">
+    <div class="col-lg-4">
         <?php foreach (range(1, 5) as $i) {
         ?>
             <div class="">
@@ -55,7 +59,3 @@ $fetchResult = mysqli_query($conn, $fetchSql);
         } ?>
     </div>
 </main>
-
-<?php
-// $selectSql = "SELECT"
-?>

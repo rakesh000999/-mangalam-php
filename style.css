@@ -1,7 +1,20 @@
-.image{
-width: 30px;
+* {
+    font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.profile-container{
+.image {
+    width: 30px;
+}
+
+.profile-container {
     width: 300px;
+}
+
+span {
+    color: red;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 2px solid lightskyblue;
 }

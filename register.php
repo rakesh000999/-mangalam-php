@@ -36,7 +36,7 @@ function isUserRegistered($row)
 if (isset($_POST['submit'])) {
 
     // username
-    isUserRegistered($row);
+    isUserRegistered($row);// test purpose
     if (isset($_POST['username']) && !empty($_POST['username']) && trim($_POST['username']) != '') {
         $username = $_POST['username'];
     } else {

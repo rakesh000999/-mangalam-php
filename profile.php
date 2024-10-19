@@ -9,7 +9,7 @@ $fetchResult = mysqli_query($conn, $fetchSql);
 
 $result = mysqli_fetch_assoc($fetchResult);
 
-$fetchPosts = "SELECT * FROM posts p INNER JOIN users u ON p.user_id = u.user_id where p.user_id = $user_id";
+$fetchPosts = "SELECT * FROM posts p INNER JOIN users u ON p.user_id = u.user_id WHERE p.user_id = $user_id";
 $fetchPostsResult = mysqli_query($conn, $fetchPosts);
 
 ?>
@@ -43,7 +43,11 @@ $fetchPostsResult = mysqli_query($conn, $fetchPosts);
                                 <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" alt="" class="w-100">
                             </div>
                         </div>
-                        <div><?php echo $postResult['created_at'] ?></div>
+                        <div class="d-flex gap-4">
+                            <div><?php echo $postResult['created_at'] ?></div>
+                            <div>👍1</div>
+                            <div>💬 2</div>
+                        </div>
                     </a>
                 </div>
             <?php
@@ -58,6 +62,6 @@ $fetchPostsResult = mysqli_query($conn, $fetchPosts);
         <img src="https://avatars.githubusercontent.com/u/154825017?v=4" alt="profile_image" class="w-25 rounded-5">
         <p class="h1"><?php echo $result['username']; ?></p>
         <p>1 Follower</p>
-        <a href="#">Edit profile</a>
+        <a href="edit-profile.php">Edit profile</a>
     </div>
 </div>
