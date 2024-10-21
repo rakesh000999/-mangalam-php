@@ -1,4 +1,4 @@
 <?php
 include 'connection.php';
-include 'nav.php';
+include 'navbar.php';
 ?>

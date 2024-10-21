@@ -1,6 +1,6 @@
 <?php
 include 'connection.php';
-include 'nav.php';
+include 'navbar.php';
 
 $user_id = $_SESSION['user_id'];
 
@@ -45,22 +45,22 @@ $row =  mysqli_num_rows($selectCommentResult);
 
 <link rel="stylesheet" href="bootstrap.min.css">
 
-<div class="row">
-    <div class="col-12 col-lg-8">
+<div class="row mx-3">
+    <div class="col-12 col-lg-8 mt-4">
         <p class="h1 fw-bold"><?php echo $data['title']; ?></p>
-        <img src="https://img.freepik.com/free-photo/abstract-autumn-beauty-multi-colored-leaf-vein-pattern-generated-by-ai_188544-9871.jpg?size=626&ext=jpg&ga=GA1.1.117944100.1729209600&semt=ais_hybrid" alt="" class="rounded">
+        <img src="https://img.freepik.com/free-photo/abstract-autumn-beauty-multi-colored-leaf-vein-pattern-generated-by-ai_188544-9871.jpg?size=626&ext=jpg&ga=GA1.1.117944100.1729209600&semt=ais_hybrid" alt="" class="rounded mt-5 mb-5">
         <p class="h3"><?php echo $data['content']; ?></p>
     </div>
-    <div class="col-12 col-lg-4 shadow-lg">
-        <p class="fw-bolder h3"><?php echo ($row <= 1) ? "Comment ($row)" : "Comments ($row)"; ?></p>
-        <div class="card shadow p-2">
+    <div class="col-12 col-lg-4 shadow-lg rounded ">
+        <p class="fw-bolder h3 mt-3"><?php echo ($row <= 1) ? "Comment ($row)" : "Comments ($row)"; ?></p>
+        <div class="card shadow-sm p-2 mt-3">
             <div>
                 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
                     alt=""
                     class="image">
                 <span><a href="viewOthersProfile.php" class="text-decoration-none text-dark fw-bold"><?php echo $userData['username'] ?></a></span>
             </div>
-            <form action="" method="post">
+            <form action="#" method="post">
                 <div class="mt-2">
                     <textarea name="comment-text" id="" rows="2" class="form-control" placeholder="Write comment here!"></textarea>
                     <span><?php echo isset($error['commentError']) ?  $error['commentError'] : ''; ?></span>

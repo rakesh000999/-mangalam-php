@@ -1,6 +1,6 @@
 <?php
 include 'connection.php';
-include 'nav.php';
+include 'navbar.php';
 
 $user_id = $_SESSION['user_id'];
 
@@ -76,9 +76,6 @@ if (isset($_POST['update'])) {
 }
 ?>
 
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="bootstrap.min.css">
-<script src="bootstrap.bundle.min.js"></script>
 
 <div class="row container-lg">
     <div class="col-lg-5 col-md-4">

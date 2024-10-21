@@ -1,6 +1,6 @@
 <?php
 include 'connection.php';
-include 'nav.php';
+include 'navbar.php';
 
 // Fetch posts along with user information
 $fetchSql = "SELECT post_id, username, title, content, created_at 
@@ -57,7 +57,6 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
                         <div><?php echo $result['created_at']; ?></div>
                         <div>👍 0</div>
                         <div><?php echo ($commentCount === 0) ? '' : "💬" . $commentCount; ?></div>
-
                     </div>
                 </a>
             </div>

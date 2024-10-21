@@ -94,32 +94,45 @@ if (isset($_POST['login'])) {
 </head>
 
 <body>
-    <div class="container mx-auto">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
 
-        <h1 class="text-success font-bold text-center">Login</h1>
+        <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
+            <h3 class="text-center mb-4">Login</h3>
 
-        <form action="" method="post" class="">
+            <form action="#" method="POST">
 
-            <div class="form-group">
-                <label for="email" class="form-label">Email</label>
-                <input class="form-control" type="email" name="email" id="email">
-                <span class="error"><?php echo isset($errors['email']) ? $errors['email'] : ''; ?></span>
-                <br>
-            </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input
+                        class="form-control"
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="Enter you email">
+                    <span class="error"><?php echo isset($errors['email']) ? $errors['email'] : ''; ?></span>
+                    <br>
+                </div>
 
-            <div class="from-group">
-                <label for="password">Password</label>
-                <input class="form-control" type="password" name="password" id="password">
-                <span class="error"><?php echo isset($errors['password']) ? $errors['password'] : ''; ?></span>
-                <br>
-            </div>
+                <div class="from-group">
+                    <label for="password">Password</label>
+                    <input
+                        class="form-control"
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Enter you password">
+                    <span class="error"><?php echo isset($errors['password']) ? $errors['password'] : ''; ?></span>
+                    <br>
+                </div>
 
-            <div class="form-group">
-                <input type="submit" name="login" class="btn btn-primary">
-                <input type="reset" name="reset" class="btn btn-danger">
-            </div>
-            <a href="./register.php">Not yet registered?</a>
-        </form>
+                <div class="form-group">
+                    <input type="submit" name="login" class="btn btn-primary">
+                    <input type="reset" name="reset" class="btn btn-danger">
+                </div>
+                <a href="./register.php">Not yet registered?</a>
+            </form>
+        </div>
+
     </div>
 
 </body>

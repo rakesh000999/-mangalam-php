@@ -1,6 +1,6 @@
 <?php
 include 'connection.php';
-include 'nav.php';
+include 'navbar.php';
 
 $user_id = $_SESSION['user_id'];
 
@@ -13,9 +13,6 @@ $fetchPosts = "SELECT * FROM posts p INNER JOIN users u ON p.user_id = u.user_id
 $fetchPostsResult = mysqli_query($conn, $fetchPosts);
 
 ?>
-
-<link rel="stylesheet" href="bootstrap.min.css">
-<script src="bootstrap.bundle.min.js"></script>
 
 <div class="container d-flex">
     <div class="w-75 p-3">

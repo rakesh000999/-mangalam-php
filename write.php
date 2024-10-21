@@ -40,7 +40,7 @@ if (isset($_POST['post'])) {
         </div>
         <div class="d-flex gap-5 align-items-center">
             <div>
-                Noti
+                🔔
             </div>
             <div>
                 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="" class="image">
@@ -51,15 +51,17 @@ if (isset($_POST['post'])) {
 </div>
 
 <div class="container">
-    <h3 class="text-center">Write Blog</h3>
+    <h3 class="text-center fw-bold">Write Blog</h3>
 
-    <form action="#" method="post">
-        <div class="form-group">
+    <form action="#" method="post" class="shadow p-4 rounded">
+        <div class="form-group my-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" name="title" class="form-control" id="title">
         </div>
         <div class="form-group">
             <label for="content" class="form-label">Content</label>
+            <hr>
+            ℹ️ 🅱️
             <textarea name="content" id="content" class="form-control" rows="10"></textarea>
         </div>
         <input type="submit" name="post" value="Post" class="bg-primary my-2 w-100 text-light h5 border-0 p-2 rounded">
