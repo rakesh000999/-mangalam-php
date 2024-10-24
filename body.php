@@ -25,7 +25,7 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
 <link rel="stylesheet" href="style.css">
 
 <main class="row container-lg mx-auto ">
-    <div class="border-end col-lg-8">
+    <div class="col-lg-8">
         <?php
         while ($result = mysqli_fetch_assoc($fetchResult)) {
             $postId = $result['post_id'];

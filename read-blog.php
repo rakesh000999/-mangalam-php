@@ -51,6 +51,7 @@ $row =  mysqli_num_rows($selectCommentResult);
         <img src="https://img.freepik.com/free-photo/abstract-autumn-beauty-multi-colored-leaf-vein-pattern-generated-by-ai_188544-9871.jpg?size=626&ext=jpg&ga=GA1.1.117944100.1729209600&semt=ais_hybrid" alt="" class="rounded mt-5 mb-5">
         <p class="h3"><?php echo $data['content']; ?></p>
     </div>
+    
     <div class="col-12 col-lg-4 shadow-lg rounded ">
         <p class="fw-bolder h3 mt-3"><?php echo ($row <= 1) ? "Comment ($row)" : "Comments ($row)"; ?></p>
         <div class="card shadow-sm p-2 mt-3">

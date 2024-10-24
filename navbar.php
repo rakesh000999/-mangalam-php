@@ -4,10 +4,15 @@ session_start();
 if (!isset($_SESSION['user_id'])) {
     header('Location:login.php');
 }
+
+$searchText = '';
+if (isset($_POST['search'])) {
+    $searchText = $_POST['search-text'];
+}
 ?>
 
-<link rel="stylesheet" href="bootstrap.min.css">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="bootstrap.min.css">
 <script src="bootstrap.bundle.min.js"></script>
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light shadow mb-4">
@@ -25,16 +30,15 @@ if (!isset($_SESSION['user_id'])) {
         </button>
 
         <div class="collapse navbar-collapse" id="collapsibleNavId">
-            <form class="d-flex my-2 my-lg-0 me-auto">
+            <form class="d-flex my-2 my-lg-0 me-auto" action="search.php?search=<?php echo $searchText ?>"" method=" POST">
                 <input
                     class="form-control me-sm-2"
                     type="text"
+                    name="search-text"
                     placeholder="Search" />
-                <button
-                    class="btn btn-outline-success my-2 my-sm-0"
-                    type="submit">
-                    Search
-                </button>
+
+                <input type="submit" name="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0">
+
             </form>
 
             <ul class="navbar-nav ms-auto gap-lg-5">
