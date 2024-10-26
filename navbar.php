@@ -17,7 +17,7 @@ if (isset($_POST['search'])) {
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light shadow mb-4">
     <div class="container">
-        <a class="navbar-brand fw-bolder" href="body.php">Mangalam</a>
+        <a class="navbar-brand fw-bolder" href="index.php">Mangalam</a>
         <button
             class="navbar-toggler d-lg-none"
             type="button"

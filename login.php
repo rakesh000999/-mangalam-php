@@ -4,7 +4,7 @@ session_start();
 
 // check if user is already logged in ( using session)
 if (isset($_SESSION['user_id'])) {
-    header('Location: body.php');
+    header('Location: index.php');
 }
 
 // check if user is already logged in ( using cookie)
@@ -57,7 +57,7 @@ if (isset($_POST['login'])) {
             // $expiry = time() + (86400 * 30); //cookie expires in 30 days
             // setcookie('name', $user['name'], $expiry);
 
-            header('Location:body.php');
+            header('Location:index.php');
         } else {
 ?>
             <div
