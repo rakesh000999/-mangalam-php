@@ -59,18 +59,12 @@ if (isset($_POST['login'])) {
 
             header('Location:index.php');
         } else {
-?>
-            <div
-                class="alert alert-danger alert-dismissible fade show container my-2"
-                role="alert">
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"></button>
+            ?>
+            <div class="alert alert-danger alert-dismissible fade show container my-2" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 <strong>Login Failed!</strong>
             </div>
-<?php
+            <?php
         }
     }
 }
@@ -93,46 +87,44 @@ if (isset($_POST['login'])) {
     </style>
 </head>
 
-<body>
-    <div class="container d-flex justify-content-center align-items-center min-vh-100">
-
-        <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
-            <h3 class="text-center mb-4">Login</h3>
+<body style="background-image:url(login.avif); background-size: cover;">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100 ">
+        <div style="width: 100%; max-width: 400px;">
+            <h3 class="text-center mb-4 fw-bolder fs-1">Login</h3>
 
             <form action="#" method="POST">
 
+                <!-- <div class="d-flex gap-2 bg-white align-items-center rounded px-2 py-1"> -->
                 <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    <input
-                        class="form-control"
-                        type="email"
-                        name="email"
-                        id="email"
-                        placeholder="Enter you email">
-                    <span class="error"><?php echo isset($errors['email']) ? $errors['email'] : ''; ?></span>
-                    <br>
-                </div>
-
-                <div class="from-group">
-                    <label for="password">Password</label>
-                    <input
-                        class="form-control"
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Enter you password">
-                    <span class="error"><?php echo isset($errors['password']) ? $errors['password'] : ''; ?></span>
+                    <div class="d-flex gap-2 bg-white align-items-center rounded">
+                        <div class="text-dark px-1">👤</div>
+                        <input type="email" name="email" id="email" class="form-control border-0"
+                            style="outline: 0; border-top-right-radius: 6px; border-bottom-right-radius: 6px;"
+                            placeholder="Enter your email">
+                    </div>
+                    <span class="error fw-bold"><?php echo isset($errors['email']) ? $errors['email'] : ''; ?></span>
                     <br>
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" name="login" class="btn btn-primary">
-                    <input type="reset" name="reset" class="btn btn-danger">
+                    <div class="d-flex gap-2 bg-white align-items-center rounded">
+                        <div class="text-dark px-1">🔐</div>
+                        <input type="password" name="password" id="password" class="form-control border-0"
+                            style="outline: 0; border-top-right-radius: 6px; border-bottom-right-radius: 6px;"
+                            placeholder="Enter your passowrd">
+                    </div>
+                    <span class="error fw-bold">
+                        <?php echo isset($errors['password']) ? $errors['password'] : ''; ?>
+                    </span>
+                    <br>
                 </div>
-                <a href="./register.php">Not yet registered?</a>
+
+                <div class="form-group">
+                    <input type="submit" name="login" class="btn btn-primary w-100">
+                </div>
+                <a class="text-white fw-bold" href="./register.php">Not yet registered?</a>
             </form>
         </div>
-
     </div>
 
 </body>
