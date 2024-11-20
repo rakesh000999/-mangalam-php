@@ -109,9 +109,9 @@ if (isset($_POST['login'])) {
                 <div class="form-group">
                     <div class="d-flex gap-2 bg-white align-items-center rounded">
                         <div class="text-dark px-1">🔐</div>
-                        <input type="password" name="password" id="password" class="form-control border-0"
+                        <input type="password" name="password" id="password" class="form-control outline-none border-0"
                             style="outline: 0; border-top-right-radius: 6px; border-bottom-right-radius: 6px;"
-                            placeholder="Enter your passowrd">
+                            placeholder="Enter your password">
                     </div>
                     <span class="error fw-bold">
                         <?php echo isset($errors['password']) ? $errors['password'] : ''; ?>

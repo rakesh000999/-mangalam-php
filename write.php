@@ -6,25 +6,20 @@ if (isset($_POST['post'])) {
 
     $user_id = $_SESSION['user_id'];
     $title = $_POST['title'];
+    $excerpt = $_POST['excerpt'];
     $content = $_POST['content'];
 
-    $insertSql = "INSERT INTO posts (user_id, title, content) VALUES ('$user_id','$title','$content')";
+    $insertSql = "INSERT INTO posts (user_id, title, excerpt, content) VALUES ('$user_id','$title','$excerpt','$content')";
     $insertResult = mysqli_query($conn, $insertSql);
 
     if ($insertResult) {
-?>
-        <div
-            class="alert alert-success alert-dismissible fade show container"
-            role="alert">
-            <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"></button>
+        ?>
+        <div class="alert alert-success alert-dismissible fade show container" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 
             <strong>Blog posted!</strong>
         </div>
-<?php
+        <?php
     }
 }
 
@@ -57,6 +52,10 @@ if (isset($_POST['post'])) {
         <div class="form-group my-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" name="title" class="form-control" id="title">
+        </div>
+        <div class="form-group my-3">
+            <label for="excerpt" class="form-label">Excerpt</label>
+            <input type="text" name="excerpt" class="form-control" id="excerpt">
         </div>
         <div class="form-group">
             <label for="content" class="form-label">Content</label>
