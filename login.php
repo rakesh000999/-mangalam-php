@@ -122,7 +122,10 @@ if (isset($_POST['login'])) {
                 <div class="form-group">
                     <input type="submit" name="login" class="btn btn-primary w-100">
                 </div>
-                <a class="text-white fw-bold" href="./register.php">Not yet registered?</a>
+                <div class="form-group d-flex justify-content-between">
+                    <a class="text-white fw-bold" href="./register.php">Not yet registered?</a>
+                    <a class="text-white fw-bold" href="./password-reset/index.php">Forgot password?</a>
+                </div>
             </form>
         </div>
     </div>
