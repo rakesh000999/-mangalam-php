@@ -3,6 +3,10 @@ require '../connection.php';
 
 session_start();
 
+if (!isset($_SESSION['email'])) {
+    header('Location: index.php');
+}
+
 $user_id = $_SESSION['user_id'];
 
 if (isset($_POST['submit'])) {
@@ -56,7 +60,7 @@ if (isset($_POST['submit'])) {
                         placeholder="Re-enter new password" required>
                 </div>
                 <!-- Submit Button -->
-                <input type="submit" name="submit" class="btn btn-primary w-100">Reset Password</inpu>
+                <input type="submit" name="submit" class="btn btn-primary w-100">
             </form>
         </div>
     </div>

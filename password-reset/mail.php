@@ -10,6 +10,14 @@ $_SESSION['email'] = $_POST['email'];
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+require_once __DIR__ . '/../vendor/autoload.php'; // Adjust path if necessary
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__); // Ensure __DIR__ points to 'password-reset'
+$dotenv->load();
+
+
 //required files
 require '../phpmailer/src/Exception.php';
 require '../phpmailer/src/PHPMailer.php';
@@ -21,13 +29,25 @@ if (isset($_POST["send"])) {
     $mail = new PHPMailer(true);
 
     //Server settings
+    // $mail->isSMTP();                              //Send using SMTP
+    // $mail->Host = 'smtp.gmail.com';       //Set the SMTP server to send through
+    // $mail->SMTPAuth = true;             //Enable SMTP authentication
+    // $mail->Username = 'rakeshjoshi6078@gmail.com';   //SMTP write your email
+    // $mail->Password = 'mupbldwdjijxkdtg';      //SMTP password
+    // $mail->SMTPSecure = 'ssl';            //Enable implicit SSL encryption
+    // $mail->Port = 465;
+
+    // Server settings
     $mail->isSMTP();                              //Send using SMTP
-    $mail->Host = 'smtp.gmail.com';       //Set the SMTP server to send through
+    $mail->Host = $_ENV['SMTP_HOST'];
+    ;       //Set the SMTP server to send through
     $mail->SMTPAuth = true;             //Enable SMTP authentication
-    $mail->Username = 'rakeshjoshi6078@gmail.com';   //SMTP write your email
-    $mail->Password = 'mupbldwdjijxkdtg';      //SMTP password
+    $mail->Username = $_ENV['SMTP_USER'];
+    ;   //SMTP write your email
+    $mail->Password = $_ENV['SMTP_PASS'];      //SMTP password
     $mail->SMTPSecure = 'ssl';            //Enable implicit SSL encryption
-    $mail->Port = 465;
+    $mail->Port = $_ENV['SMTP_PORT'];
+    ;
 
 
     // OPT generate
