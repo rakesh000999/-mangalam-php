@@ -34,7 +34,7 @@ $fetchPostsResult = mysqli_query($conn, $fetchPosts);
                         <div class="d-flex">
                             <div class="w-75">
                                 <h2><?php echo $postResult['title'] ?></h2>
-                                <h4><?php echo $postResult['content'] ?></h4>
+                                <h4><?php echo $postResult['excerpt'] ?></h4>
                             </div>
                             <div class="w-25 object-fit-fill">
                                 <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" alt="" class="w-100">

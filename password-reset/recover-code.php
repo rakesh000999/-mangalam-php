@@ -10,17 +10,13 @@ if (!isset($_SESSION['email'])) {
     $email = $_SESSION['email'];
 }
 
-$code = $_SESSION['code'];
-
 if (isset($_POST['submit'])) {
     $user_code = $_POST['code'];
 
     $selectCode = "SELECT * FROM password_resets WHERE otp = '$user_code'";
     $selectCodeResult = mysqli_query($conn, $selectCode);
 
-    $result = mysqli_fetch_assoc($selectCodeResult);
-
-    if ($result['otp'] === $code) {
+    if (mysqli_num_rows($selectCodeResult) > 0) {
         header('location:password-reset-page.php');
     } else {
         header('location:index.php');
@@ -31,8 +27,6 @@ if (isset($_POST['submit'])) {
 
 <link rel="stylesheet" href="../bootstrap.min.css">
 <script src="../bootstrap.bundle.min.js"></script>
-
-<!-- <body class="bg-secondary bg-gradient  "> -->
 
 <nav class="py-3 shadow">
     <h2 class="px-3">Mangalam</h2>
@@ -64,4 +58,3 @@ if (isset($_POST['submit'])) {
 
     </div>
 </div>
-<!-- </body> -->

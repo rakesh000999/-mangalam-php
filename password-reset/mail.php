@@ -17,7 +17,6 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__); // Ensure __DIR__ points to 'password-reset'
 $dotenv->load();
 
-
 //required files
 require '../phpmailer/src/Exception.php';
 require '../phpmailer/src/PHPMailer.php';
@@ -27,15 +26,6 @@ require '../phpmailer/src/SMTP.php';
 if (isset($_POST["send"])) {
 
     $mail = new PHPMailer(true);
-
-    //Server settings
-    // $mail->isSMTP();                              //Send using SMTP
-    // $mail->Host = 'smtp.gmail.com';       //Set the SMTP server to send through
-    // $mail->SMTPAuth = true;             //Enable SMTP authentication
-    // $mail->Username = 'rakeshjoshi6078@gmail.com';   //SMTP write your email
-    // $mail->Password = 'mupbldwdjijxkdtg';      //SMTP password
-    // $mail->SMTPSecure = 'ssl';            //Enable implicit SSL encryption
-    // $mail->Port = 465;
 
     // Server settings
     $mail->isSMTP();                              //Send using SMTP
@@ -47,8 +37,6 @@ if (isset($_POST["send"])) {
     $mail->Password = $_ENV['SMTP_PASS'];      //SMTP password
     $mail->SMTPSecure = 'ssl';            //Enable implicit SSL encryption
     $mail->Port = $_ENV['SMTP_PORT'];
-    ;
-
 
     // OPT generate
     function generateOTP($length = 6)
@@ -65,8 +53,6 @@ if (isset($_POST["send"])) {
 
     // Example usage
     $otp = generateOTP(); // Generates a 6-digit OTP
-    // echo "Your OTP is: " . $otp;
-
 
     //Recipients
     $mail->setFrom('rakeshjoshi6078@gmail.com', 'Mangalam'); // Sender Email and name
@@ -80,8 +66,6 @@ if (isset($_POST["send"])) {
 
     // Success sent message alert
     $mail->send();
-
-    $_SESSION['code'] = $otp;
 
     $email = $_POST['email'];
 
