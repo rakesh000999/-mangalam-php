@@ -20,6 +20,8 @@ $commentCounts = [];
 while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
     $commentCounts[$commentRow['post_id']] = $commentRow['comment_count'];
 }
+
+
 ?>
 
 <link rel="stylesheet" href="style.css">
@@ -64,15 +66,27 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
         ?>
     </div>
 
+
+    <!-- Top Posts -->
+    <?php
+    $select = $conn->query("SELECT post_id, COUNT(comment_id) as comment_c FROM comments GROUP BY post_id");
+
+    ?>
     <div class="col-lg-4">
+        <div class="text-success fw-bold h5">Top Posts:</div>
         <?php foreach (range(1, 5) as $i) { ?>
-            <div>
-                <div>
-                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Image" class="image">
-                    <span>Rakesh Joshi</span>
+            <?php while ($result = $select->fetch_assoc()) {
+                ?>
+                <div class="mt-3">
+                    <div>
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Image" class="image">
+                        <span><?php echo $result['username']; ?></span>
+                    </div>
+                    <p class="h-4"><?php echo $result['post_id'] ?></p>
                 </div>
-                <p class="h-4">Lorem ipsum dolor sit amet consectetur.</p>
-            </div>
+                <?php
+            } ?>
+
         <?php } ?>
     </div>
 </main>

@@ -5,49 +5,46 @@ include 'connection.php';
 $isValid = true;
 $errors = array();
 
-$username = $email  = $password  = $cPassword = '';
+$username = $email = $password = $cPassword = '';
 $emailPattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
-$usernameError = $emailError =  $passwordError = $cPasswordError = "";
-
-$selectSql = "SELECT username, email FROM users";
-$selectResult = mysqli_query($conn, $selectSql);
-
-$row = mysqli_num_rows($selectResult);
-
-function isUserRegistered($row)
-{
-    if ($row === 1) {
-?>
-        <div
-            class="alert alert-info alert-dismissible fade show"
-            role="alert">
-            <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close">
-            </button>
-            <strong>User is already registered!</strong>
-        </div>
-<?php
-    }
-}
+$usernameError = $emailError = $passwordError = $cPasswordError = "";
 
 if (isset($_POST['submit'])) {
 
     // username
-    isUserRegistered($row);// test purpose
+
     if (isset($_POST['username']) && !empty($_POST['username']) && trim($_POST['username']) != '') {
         $username = $_POST['username'];
+
+        $selectUsername = "SELECT username FROM users WHERE username = '$username'";
+        $selectUsernameResult = mysqli_query($conn, $selectUsername);
+        $row = mysqli_num_rows($selectUsernameResult);
+
+        if ($row > 0) {
+            $errors['username'] = "Username already exists!";
+            $isValid = false;
+        }
+
     } else {
         $errors['username'] = "First name is not valid! <br>";
         $isValid = false;
     }
 
     // email
-    isUserRegistered($row);
     if (isset($_POST['email']) && !empty($_POST['email']) && trim($_POST['email']) != '') {
         $email = $_POST['email'];
+
+        $selectEmail = "SELECT email FROM users WHERE email = '$email'";
+        $selectEmailResult = mysqli_query($conn, $selectEmail);
+
+        $row = mysqli_num_rows($selectEmailResult);
+
+        if ($row > 0) {
+            $errors['email'] = "Email already exists!";
+            $isValid = false;
+        }
+
+
         if (!preg_match($emailPattern, $email)) {
             $errors['email'] = "Email must be in the proper format!";
             $isValid = false;
@@ -69,7 +66,7 @@ if (isset($_POST['submit'])) {
     $cPassword = $_POST['c-password'];
     if ($password !== $cPassword) {
         $isValid = false;
-        $errors['cPassword'] =  "Password must match! <br>";
+        $errors['cPassword'] = "Password must match! <br>";
     }
 
     // database insertion
