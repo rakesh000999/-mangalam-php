@@ -1,20 +1,7 @@
-<?php
-session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location:login.php');
-}
-
-$searchText = '';
-if (isset($_POST['search'])) {
-    $searchText = $_POST['search-text'];
-}
-?>
-
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="bootstrap.min.css">
-<script src="bootstrap.bundle.min.js"></script>
-<script src="https://kit.fontawesome.com/7419fa8a42.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../bootstrap.min.css">
+<script src="../bootstrap.bundle.min.js"></script>
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light shadow mb-4">
     <div class="container">
@@ -38,18 +25,17 @@ if (isset($_POST['search'])) {
             <ul class="navbar-nav ms-auto gap-lg-5">
                 <div class="d-flex justify-content-between align-items-center gap-5">
                     <div>
-                        <button class="rounded border-0 px-2 py-1"><a href="write.php"
-                                class="text-dark text-decoration-none"><i class="fa-regular fa-pen-to-square"></i> Write
-                            </a></button>
+                        <button class="rounded bg-success border-0 px-2 py-1"><a href="write.php"
+                                class="text-light text-decoration-none">Write✍️</a></button>
                     </div>
                     <div class="">
-                        <i class="fa-regular fa-bell"></i>
+                        🔔
                     </div>
                 </div>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user"></i>
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="" class="image">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" href="profile.php">Profile</a></li>

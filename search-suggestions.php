@@ -9,11 +9,16 @@ $searchResult = mysqli_query($conn, $searchSql);
 ?>
 <style>
     .hover-list:hover {
-        background-color:black ;
+        background-color: #333333;
+    }
+
+    .width {
+        width: 50%;
+        z-index: auto;
     }
 </style>
 
-<div class="rounded shadow-lg z-3 bg-secondary">
+<div class="rounded shadow-lg z-3 bg-secondary z-3 width">
     <ul type="none" class="pt-3">
         <?php
         while ($result = mysqli_fetch_assoc($searchResult)) {
@@ -22,7 +27,8 @@ $searchResult = mysqli_query($conn, $searchSql);
             ?>
             <a href="read-blog.php?id=<?php echo $postId; ?>" class="text-decoration-none text-white">
                 <li class="hover-list">
-                    <p class="fw-bolder" class="">🔍<?php echo $result['title']; ?></p>
+                    <p class="fw-bolder" class=""><i class="fa-solid fa-magnifying-glass text-black hover:text-black"></i>
+                        <?php echo $result['title']; ?></p>
                 </li>
             </a>
             <?php

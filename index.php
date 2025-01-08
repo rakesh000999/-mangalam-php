@@ -56,8 +56,10 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
                     </div>
                     <div class="d-flex gap-4">
                         <div><?php echo $result['created_at']; ?></div>
-                        <div>👍 0</div>
-                        <div><?php echo ($commentCount === 0) ? '' : "💬" . $commentCount; ?></div>
+                        <div><i class="fa-solid fa-heart"></i> 0</div>
+                        <div>
+                            <?php echo ($commentCount === 0) ? '' : '<i class="fa-solid fa-comment"></i> ' . $commentCount; ?>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -69,24 +71,34 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
 
     <!-- Top Posts -->
     <?php
-    $select = $conn->query("SELECT post_id, COUNT(comment_id) as comment_c FROM comments GROUP BY post_id");
-
+    $selectTopComment = $conn->query("
+    SELECT p.post_id, u.username, p.title, COUNT(c.comment_id) AS comment_count
+    FROM posts AS p
+    LEFT JOIN comments AS c ON p.post_id = c.post_id
+    LEFT JOIN users AS u ON p.user_id = u.user_id
+    GROUP BY p.post_id, u.username, p.title
+    ORDER BY comment_count DESC
+    LIMIT 5
+");
     ?>
+
     <div class="col-lg-4">
         <div class="text-success fw-bold h5">Top Posts:</div>
-        <?php foreach (range(1, 5) as $i) { ?>
-            <?php while ($result = $select->fetch_assoc()) {
-                ?>
-                <div class="mt-3">
-                    <div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Image" class="image">
-                        <span><?php echo $result['username']; ?></span>
-                    </div>
-                    <p class="h-4"><?php echo $result['post_id'] ?></p>
-                </div>
-                <?php
-            } ?>
+        <?php while ($result = $selectTopComment->fetch_assoc()) {
 
-        <?php } ?>
+            ?>
+            <a href="read-blog.php?id=<?php echo $result['post_id']; ?>" class="text-decoration-none text-dark">
+                <div class="mt-3 card p-2">
+                    <div>
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Image"
+                            class="image">
+                        <span class="text-dark fw-bolder"><?php echo $result['username']; ?></span>
+                    </div>
+                    <p class="h-4"><?php echo $result['title'] ?></p>
+                </div>
+            </a>
+            <?php
+        } ?>
+
     </div>
 </main>

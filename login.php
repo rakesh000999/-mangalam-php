@@ -49,6 +49,13 @@ if (isset($_POST['login'])) {
         if (mysqli_num_rows($selectResult) == 1) {
             $user = mysqli_fetch_assoc($selectResult);
 
+            if ($user['role'] === "admin") {
+
+                $_SESSION['user_id'] = $user['user_name'];
+                header('Location: admin/dashboard');
+                return;
+            }
+
             // store user data in session variable
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
@@ -80,6 +87,7 @@ if (isset($_POST['login'])) {
 
     <link rel="stylesheet" href="bootstrap.min.css">
     <script src="bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/7419fa8a42.js" crossorigin="anonymous"></script>
     <style>
         span {
             color: red;
@@ -97,7 +105,7 @@ if (isset($_POST['login'])) {
                 <!-- <div class="d-flex gap-2 bg-white align-items-center rounded px-2 py-1"> -->
                 <div class="form-group">
                     <div class="d-flex gap-2 bg-white align-items-center rounded">
-                        <div class="text-dark px-1">👤</div>
+                        <div class="text-dark px-1"><i class="fa-regular fa-user"></i></div>
                         <input type="email" name="email" id="email" class="form-control border-0"
                             style="outline: 0; border-top-right-radius: 6px; border-bottom-right-radius: 6px;"
                             placeholder="Enter your email">
@@ -108,7 +116,7 @@ if (isset($_POST['login'])) {
 
                 <div class="form-group">
                     <div class="d-flex gap-2 bg-white align-items-center rounded">
-                        <div class="text-dark px-1">🔐</div>
+                        <div class="text-dark px-1"><i class="fa-solid fa-lock"></i></div>
                         <input type="password" name="password" id="password" class="form-control outline-none border-0"
                             style="outline: 0; border-top-right-radius: 6px; border-bottom-right-radius: 6px;"
                             placeholder="Enter your password">
