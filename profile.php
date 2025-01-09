@@ -4,7 +4,11 @@ include 'navbar.php';
 
 $user_id = $_SESSION['user_id'];
 
-$fetchSql = "SELECT * FROM users WHERE user_id = $user_id";
+$fetchSql = "SELECT * FROM users u 
+                    INNER JOIN user_profiles up 
+                    ON u.user_id = up.user_id 
+                    WHERE u.user_id = $user_id";
+
 $fetchResult = mysqli_query($conn, $fetchSql);
 
 $result = mysqli_fetch_assoc($fetchResult);
@@ -21,15 +25,14 @@ $fetchPostsResult = mysqli_query($conn, $fetchPosts);
         <div class="w-75">
             <?php
             while ($postResult = mysqli_fetch_assoc($fetchPostsResult)) {
-            ?>
+                ?>
                 <div class="card d-flex m-2 p-2">
-                    <a href="read-blog.php?id=<?php echo $postResult['post_id'] ?>"
-                        class="text-decoration-none text-dark">
+                    <a href="read-blog.php?id=<?php echo $postResult['post_id'] ?>" class="text-decoration-none text-dark">
                         <div>
-                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                                alt=""
-                                class="image">
-                            <span><?php echo $postResult['username'] ?></span>
+                            <img src="uploads/<?php echo !empty($result['profile_picture']) ? $result['profile_picture'] : 'default.png'; ?>"
+                                alt="profile-image" class='image rounded-circle'>
+
+                            <span class="text-dark fw-bold"><?php echo $postResult['username'] ?></span>
                         </div>
                         <div class="d-flex">
                             <div class="w-75">
@@ -37,7 +40,10 @@ $fetchPostsResult = mysqli_query($conn, $fetchPosts);
                                 <h4><?php echo $postResult['excerpt'] ?></h4>
                             </div>
                             <div class="w-25 object-fit-fill">
-                                <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" alt="" class="w-100">
+
+                                <img src="uploads/<?php echo !empty($result['profile_picture']) ? $result['profile_picture'] : 'default.png'; ?>"
+                                    alt="post_image" class=' w-100'>
+
                             </div>
                         </div>
                         <div class="d-flex gap-4">
@@ -47,7 +53,7 @@ $fetchPostsResult = mysqli_query($conn, $fetchPosts);
                         </div>
                     </a>
                 </div>
-            <?php
+                <?php
             }
             ?>
 
@@ -56,7 +62,10 @@ $fetchPostsResult = mysqli_query($conn, $fetchPosts);
     </div>
 
     <div class="border-start w-25 p-3">
-        <img src="https://avatars.githubusercontent.com/u/154825017?v=4" alt="profile_image" class="w-25 rounded-5">
+
+        <img src="uploads/<?php echo !empty($result['profile_picture']) ? $result['profile_picture'] : 'default.png'; ?>"
+            alt="profile-image" class='rounded w-50'>
+
         <p class="h1"><?php echo $result['username']; ?></p>
         <p>1 Follower</p>
         <a href="edit-profile.php">Edit profile</a>

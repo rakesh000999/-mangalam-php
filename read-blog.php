@@ -11,8 +11,8 @@ $fetchResult = mysqli_query($conn, $fetchSql);
 
 $data = mysqli_fetch_assoc($fetchResult);
 
-// comment
-$selectUser = "SELECT * FROM users WHERE user_id = $user_id";
+// COMMENT
+$selectUser = "SELECT * FROM users u INNER JOIN user_profiles up ON u.user_id = up.user_id WHERE u.user_id = $user_id";
 $selectUserResult = mysqli_query($conn, $selectUser);
 
 $userData = mysqli_fetch_assoc($selectUserResult);
@@ -37,10 +37,15 @@ if (isset($_POST['submit'])) {
 }
 
 // select comment
-$selectComment = "SELECT * FROM comments c INNER JOIN users u ON c.user_id = u.user_id WHERE post_id = '$getBlogId'";
+$selectComment = "SELECT * FROM comments c 
+                        INNER JOIN users u 
+                        ON c.user_id = u.user_id 
+                        INNER JOIN user_profiles up
+                        ON u.user_id = up.user_id
+                        WHERE post_id = '$getBlogId'";
 $selectCommentResult = mysqli_query($conn, $selectComment);
 
-$row =  mysqli_num_rows($selectCommentResult);
+$row = mysqli_num_rows($selectCommentResult);
 ?>
 
 <link rel="stylesheet" href="bootstrap.min.css">
@@ -48,26 +53,33 @@ $row =  mysqli_num_rows($selectCommentResult);
 <div class="row mx-3">
     <div class="col-12 col-lg-8 mt-4">
         <p class="h1 fw-bold"><?php echo $data['title']; ?></p>
-        <img src="https://img.freepik.com/free-photo/abstract-autumn-beauty-multi-colored-leaf-vein-pattern-generated-by-ai_188544-9871.jpg?size=626&ext=jpg&ga=GA1.1.117944100.1729209600&semt=ais_hybrid" alt="" class="rounded mt-5 mb-5">
+        <img src="https://img.freepik.com/free-photo/abstract-autumn-beauty-multi-colored-leaf-vein-pattern-generated-by-ai_188544-9871.jpg?size=626&ext=jpg&ga=GA1.1.117944100.1729209600&semt=ais_hybrid"
+            alt="" class="rounded mt-5 mb-5">
         <p class="h3"><?php echo $data['content']; ?></p>
     </div>
-    
+
     <div class="col-12 col-lg-4 shadow-lg rounded ">
         <p class="fw-bolder h3 mt-3"><?php echo ($row <= 1) ? "Comment ($row)" : "Comments ($row)"; ?></p>
         <div class="card shadow-sm p-2 mt-3">
             <div>
-                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                    alt=""
-                    class="image">
-                <span><a href="viewOthersProfile.php" class="text-decoration-none text-dark fw-bold"><?php echo $userData['username'] ?></a></span>
+
+                <img src="uploads/<?php echo !empty($userData['profile_picture']) ? $userData['profile_picture'] : 'default.png'; ?>"
+                    alt="profile-image" class='rounded-circle image '>
+
+
+
+                <span><a href="viewOthersProfile.php"
+                        class="text-decoration-none text-dark fw-bold"><?php echo $userData['username'] ?></a></span>
             </div>
             <form action="#" method="post">
                 <div class="mt-2">
-                    <textarea name="comment-text" id="" rows="2" class="form-control" placeholder="Write comment here!"></textarea>
-                    <span><?php echo isset($error['commentError']) ?  $error['commentError'] : ''; ?></span>
+                    <textarea name="comment-text" id="" rows="2" class="form-control"
+                        placeholder="Write comment here!"></textarea>
+                    <span><?php echo isset($error['commentError']) ? $error['commentError'] : ''; ?></span>
                 </div>
                 <div class="mt-2">
-                    <input type="submit" class="btn btn-success fw-bolder border-0 px-2 py-1 rounded-1" value="Comment" name="submit">
+                    <input type="submit" class="btn btn-success fw-bolder border-0 px-2 py-1 rounded-1" value="Comment"
+                        name="submit">
                 </div>
             </form>
         </div>
@@ -80,16 +92,17 @@ $row =  mysqli_num_rows($selectCommentResult);
 
                 <?php
                 while ($commentData = mysqli_fetch_assoc($selectCommentResult)) {
-                ?>
+                    ?>
                     <div class="d-flex gap-2">
                         <div>
-                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                                alt=""
-                                class="image">
+                            <img src="uploads/<?php echo !empty($commentData['profile_picture']) ? $commentData['profile_picture'] : 'default.png'; ?>"
+                                alt="profile-image" class='image rounded-circle'>
+
                         </div>
                         <div>
                             <div>
-                                <span><a href="viewOthersProfile.php" class="text-decoration-none text-dark fw-bold"><?php echo $commentData['username'] ?></a></span>
+                                <span><a href="viewOthersProfile.php"
+                                        class="text-decoration-none text-dark fw-bold"><?php echo $commentData['username'] ?></a></span>
                             </div>
                             <div class="mt-0">
                                 <p><?php echo $commentData['created_at']; ?></p>
@@ -108,7 +121,7 @@ $row =  mysqli_num_rows($selectCommentResult);
                         <hr>
                     </div>
 
-                <?php
+                    <?php
                 } ?>
 
             </div>

@@ -2,11 +2,12 @@
 include 'connection.php';
 include 'navbar.php';
 
-// Fetch posts along with user information
-$fetchSql = "SELECT post_id, username, title, excerpt, created_at 
-             FROM users 
-             INNER JOIN posts ON users.user_id = posts.user_id
-             ORDER BY created_at DESC";
+$fetchSql = "SELECT p.post_id, u.username, p.title, p.excerpt, p.created_at, profile_picture
+             FROM posts p
+             INNER JOIN users u ON u.user_id = p.user_id
+             INNER JOIN user_profiles up ON u.user_id = up.user_id
+             ORDER BY p.created_at DESC";
+
 $fetchResult = mysqli_query($conn, $fetchSql);
 
 // Fetch comment counts grouped by post_id
@@ -21,7 +22,6 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
     $commentCounts[$commentRow['post_id']] = $commentRow['comment_count'];
 }
 
-
 ?>
 
 <link rel="stylesheet" href="style.css">
@@ -31,12 +31,16 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
         <?php
         while ($result = mysqli_fetch_assoc($fetchResult)) {
             $postId = $result['post_id'];
+
             // Check if this post has comments, otherwise default to 0
             $commentCount = isset($commentCounts[$postId]) ? $commentCounts[$postId] : 0;
             ?>
+
             <div class="card d-flex m-2 p-2">
                 <div>
-                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Image" class="image">
+                    <img src="uploads/<?php echo !empty($result['profile_picture']) ? $result['profile_picture'] : 'default.png'; ?>"
+                        alt="Profile Image" class="image rounded-circle">
+
                     <span>
                         <a href="viewOthersProfile.php" class="text-decoration-none text-dark">
                             <?php echo $result['username']; ?>
@@ -72,10 +76,11 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
     <!-- Top Posts -->
     <?php
     $selectTopComment = $conn->query("
-    SELECT p.post_id, u.username, p.title, COUNT(c.comment_id) AS comment_count
+    SELECT p.post_id, u.username, p.title, COUNT(c.comment_id) AS comment_count, profile_picture
     FROM posts AS p
     LEFT JOIN comments AS c ON p.post_id = c.post_id
     LEFT JOIN users AS u ON p.user_id = u.user_id
+    LEFT JOIN user_profiles AS up ON u.user_id = up.user_id
     GROUP BY p.post_id, u.username, p.title
     ORDER BY comment_count DESC
     LIMIT 5
@@ -90,8 +95,12 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
             <a href="read-blog.php?id=<?php echo $result['post_id']; ?>" class="text-decoration-none text-dark">
                 <div class="mt-3 card p-2">
                     <div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Image"
-                            class="image">
+                        <!-- <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Image"
+                            class="image"> -->
+
+                        <img src="uploads/<?php echo !empty($result['profile_picture']) ? $result['profile_picture'] : 'default.png'; ?>"
+                            alt="Profile Image" class="image rounded-circle">
+
                         <span class="text-dark fw-bolder"><?php echo $result['username']; ?></span>
                     </div>
                     <p class="h-4"><?php echo $result['title'] ?></p>
