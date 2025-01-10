@@ -1,5 +1,8 @@
 <?php
+require 'connection.php';
 session_start();
+
+$user_id = $_SESSION['user_id'];
 
 if (!isset($_SESSION['user_id'])) {
     header('Location:login.php');
@@ -9,6 +12,10 @@ $searchText = '';
 if (isset($_POST['search'])) {
     $searchText = $_POST['search-text'];
 }
+
+$sql = "SELECT profile_picture FROM user_profiles WHERE user_id = $user_id";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
 ?>
 
 <link rel="stylesheet" href="style.css">
@@ -49,7 +56,18 @@ if (isset($_POST['search'])) {
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user"></i>
+                        <?php
+                        if (!empty($row['profile_picture'])) {
+                            ?>
+                            <img src="uploads/<?php echo $row['profile_picture']; ?>" alt="profile"
+                                class="image rounded-circle">
+                            <?php
+                        } else {
+                            ?>
+                            <img src="uploads/default.png" alt="profile" class="image rounded-circle">
+                            <?php
+                        }
+                        ?>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" href="profile.php">Profile</a></li>

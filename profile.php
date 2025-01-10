@@ -13,7 +13,7 @@ $fetchResult = mysqli_query($conn, $fetchSql);
 
 $result = mysqli_fetch_assoc($fetchResult);
 
-$fetchPosts = "SELECT * FROM posts p INNER JOIN users u ON p.user_id = u.user_id WHERE p.user_id = $user_id";
+$fetchPosts = "SELECT * FROM posts p INNER JOIN users u ON p.user_id = u.user_id WHERE p.user_id = $user_id ORDER BY p.created_at DESC";
 $fetchPostsResult = mysqli_query($conn, $fetchPosts);
 
 ?>
@@ -41,8 +41,7 @@ $fetchPostsResult = mysqli_query($conn, $fetchPosts);
                             </div>
                             <div class="w-25 object-fit-fill">
 
-                                <img src="uploads/<?php echo !empty($result['profile_picture']) ? $result['profile_picture'] : 'default.png'; ?>"
-                                    alt="post_image" class=' w-100'>
+                                <img src="uploads/<?php echo $postResult['blog_image'] ?>" alt="post_image" class=' w-100'>
 
                             </div>
                         </div>
