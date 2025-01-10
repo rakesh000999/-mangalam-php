@@ -2,7 +2,7 @@
 include 'connection.php';
 include 'navbar.php';
 
-$fetchSql = "SELECT p.post_id, u.username, p.title, p.excerpt, p.created_at, profile_picture
+$fetchSql = "SELECT p.post_id, u.username, p.title, p.blog_image, p.excerpt, p.created_at, profile_picture
              FROM posts p
              INNER JOIN users u ON u.user_id = p.user_id
              INNER JOIN user_profiles up ON u.user_id = up.user_id
@@ -47,15 +47,17 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
                         </a>
                     </span>
                 </div>
+
                 <a href="read-blog.php?id=<?php echo $postId; ?>" class="text-decoration-none text-dark">
                     <div class="d-flex">
                         <div class="w-75">
                             <h2 class="fw-bolder"><?php echo $result['title']; ?></h2>
                             <h4><?php echo $result['excerpt']; ?></h4>
                         </div>
-                        <div class="w-25 object-fit-fill">
-                            <img src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-beach-free-image-after-sunset-sky-free-photo.jpeg?w=600&quality=80"
-                                alt="Blog Image" class="w-100">
+                        <div class="w-25">
+
+                            <img src="uploads/<?php echo $result['blog_image'] ?>" class="rounded w-100 object-fit-cover"
+                                alt="blog_image">
                         </div>
                     </div>
                     <div class="d-flex gap-4">

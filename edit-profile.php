@@ -127,7 +127,7 @@ if (isset($_POST['addprofile'])) {
     } else {
         ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>All fields are required!</strong>
+            <strong>Field is required!</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         <?php

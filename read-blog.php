@@ -51,10 +51,10 @@ $row = mysqli_num_rows($selectCommentResult);
 <link rel="stylesheet" href="bootstrap.min.css">
 
 <div class="row mx-3">
+
     <div class="col-12 col-lg-8 mt-4">
         <p class="h1 fw-bold"><?php echo $data['title']; ?></p>
-        <img src="https://img.freepik.com/free-photo/abstract-autumn-beauty-multi-colored-leaf-vein-pattern-generated-by-ai_188544-9871.jpg?size=626&ext=jpg&ga=GA1.1.117944100.1729209600&semt=ais_hybrid"
-            alt="" class="rounded mt-5 mb-5">
+        <img src="uploads/<?php echo $data['blog_image'] ?>" class="rounded mt-5 mb-5" alt="blog_image">
         <p class="h3"><?php echo $data['content']; ?></p>
     </div>
 
@@ -113,8 +113,8 @@ $row = mysqli_num_rows($selectCommentResult);
                         <p><?php echo $commentData['comment_text']; ?></p>
                         <div class="d-flex justify-content-between">
                             <div class="d-flex gap-4">
-                                <div>0 👍</div>
-                                <div>0 💬</div>
+                                <div><i class="fa-solid fa-heart"></i> 0</div>
+                                <div><i class="fa-solid fa-comment"></i> 0 </div>
                             </div>
                             <div>Reply</div>
                         </div>
