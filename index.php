@@ -37,9 +37,9 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
             ?>
 
             <div class="card d-flex m-2 p-2">
-                <div>
+                <div class="mb-2">
                     <img src="uploads/<?php echo !empty($result['profile_picture']) ? $result['profile_picture'] : 'default.png'; ?>"
-                        alt="Profile Image" class="image rounded-circle">
+                        alt="Profile Image" class="image rounded-circle" style="width: 32px; height: 32px;">
 
                     <span>
                         <a href="viewOthersProfile.php" class="text-decoration-none text-dark">
@@ -49,22 +49,27 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
                 </div>
 
                 <a href="read-blog.php?id=<?php echo $postId; ?>" class="text-decoration-none text-dark">
-                    <div class="d-flex">
+                    <div class="d-flex gap-4">
                         <div class="w-75">
-                            <h2 class="fw-bolder"><?php echo $result['title']; ?></h2>
-                            <h4><?php echo $result['excerpt']; ?></h4>
+                            <h3 class="fw-bolder"><?php echo $result['title']; ?></h3>
+                            <h5 class="text-secondary"><?php echo $result['excerpt']; ?></h5>
                         </div>
                         <div class="w-25">
 
-                            <img src="uploads/<?php echo $result['blog_image'] ?>" class="rounded w-100 object-fit-cover"
-                                alt="blog_image">
+                            <img src="uploads/<?php echo $result['blog_image'] ?>" class="rounded " alt="blog_image"
+                                style="width : 150px; height: 120px; object-fit: cover;">
                         </div>
                     </div>
-                    <div class="d-flex gap-4">
-                        <div><?php echo $result['created_at']; ?></div>
-                        <div><i class="fa-solid fa-heart"></i> 0</div>
-                        <div>
-                            <?php echo ($commentCount === 0) ? '' : '<i class="fa-solid fa-comment"></i> ' . $commentCount; ?>
+                    <div class="d-flex gap-5 mt-2 justify-content-between align-items-center">
+                        <div class="d-flex gap-4">
+                            <div class="text-secondary"><?php echo $result['created_at']; ?></div>
+                            <div><i class="fa-solid fa-heart"></i> 0</div>
+                            <div>
+                                <?php echo ($commentCount === 0) ? '' : '<i class="fa-solid fa-comment"></i> ' . $commentCount; ?>
+                            </div>
+                        </div>
+                        <div class="text-secondary float-end">
+                            <!-- <i class="fa-solid fa-ellipsis"></i> -->
                         </div>
                     </div>
                 </a>
@@ -78,7 +83,7 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
     <!-- Top Posts -->
     <?php
     $selectTopComment = $conn->query("
-    SELECT p.post_id, u.username, p.title, COUNT(c.comment_id) AS comment_count, profile_picture
+    SELECT p.post_id, u.username, p.title, COUNT(c.comment_id) AS comment_count, up.profile_picture
     FROM posts AS p
     LEFT JOIN comments AS c ON p.post_id = c.post_id
     LEFT JOIN users AS u ON p.user_id = u.user_id
@@ -97,11 +102,8 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
             <a href="read-blog.php?id=<?php echo $result['post_id']; ?>" class="text-decoration-none text-dark">
                 <div class="mt-3 card p-2">
                     <div>
-                        <!-- <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Image"
-                            class="image"> -->
-
                         <img src="uploads/<?php echo !empty($result['profile_picture']) ? $result['profile_picture'] : 'default.png'; ?>"
-                            alt="Profile Image" class="image rounded-circle">
+                            alt="Profile Image" class="image rounded-circle" style="width: 32px; height: 32px;">
 
                         <span class="text-dark fw-bolder"><?php echo $result['username']; ?></span>
                     </div>

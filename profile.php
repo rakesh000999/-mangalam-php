@@ -30,7 +30,7 @@ $fetchPostsResult = mysqli_query($conn, $fetchPosts);
                     <a href="read-blog.php?id=<?php echo $postResult['post_id'] ?>" class="text-decoration-none text-dark">
                         <div>
                             <img src="uploads/<?php echo !empty($result['profile_picture']) ? $result['profile_picture'] : 'default.png'; ?>"
-                                alt="profile-image" class='image rounded-circle'>
+                                alt="profile-image" class='image rounded-circle' style="width: 32px; height: 32px; object-fit: cover;">
 
                             <span class="text-dark fw-bold"><?php echo $postResult['username'] ?></span>
                         </div>

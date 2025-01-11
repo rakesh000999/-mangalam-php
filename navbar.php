@@ -60,7 +60,7 @@ $row = mysqli_fetch_assoc($result);
                         if (!empty($row['profile_picture'])) {
                             ?>
                             <img src="uploads/<?php echo $row['profile_picture']; ?>" alt="profile"
-                                class="image rounded-circle">
+                                class="image rounded-circle" style="width: 32px; height: 32px; object-fit: cover;">
                             <?php
                         } else {
                             ?>

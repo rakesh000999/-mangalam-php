@@ -6,9 +6,10 @@ if (isset($_POST['post'])) {
   session_start();
 
   $user_id = $_SESSION['user_id'];
-  $postTitle = $_POST['title'];
-  $excerpt = $_POST['excerpt'];
-  $content = $_POST['content'];
+  $postTitle = mysqli_real_escape_string($conn, $_POST['title']);
+  $excerpt = mysqli_real_escape_string($conn, $_POST['excerpt']);
+  $content = mysqli_real_escape_string($conn, $_POST['content']);
+  $category = mysqli_real_escape_string($conn, $_POST['category']);
 
   $image_final_name = '';
 
@@ -23,7 +24,7 @@ if (isset($_POST['post'])) {
     $image_array = explode('.', $image_name);
     $extension = end($image_array);
 
-    if ($extension === 'jpg' || $extension === 'png' || $extension === 'jpeg') {
+    if ($extension === 'jpg' || $extension === 'png' || $extension === 'jpeg' || $extension === 'webp') {
       if ($image_size === 0) {
         echo ' <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     File size exceeds maximum value. Only file less than 2 MB is supported.
@@ -35,15 +36,19 @@ if (isset($_POST['post'])) {
 
         if (move_uploaded_file($image['tmp_name'], "uploads/" . $image_final_name)) {
 
-          $insertSql = "INSERT INTO posts (user_id, title, blog_image, excerpt, content) VALUES ('$user_id','$postTitle','$image_final_name','$excerpt','$content')";
+          $insertSql = "INSERT INTO posts (user_id, title, category_id, blog_image, excerpt, content) VALUES ('$user_id','$postTitle', '$category','$image_final_name','$excerpt','$content')";
           $insertResult = mysqli_query($conn, $insertSql);
 
           if ($insertResult) {
+
+            header('Location: index.php');
             ?>
             <div class="alert alert-success alert-dismissible fade show container" role="alert">
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               <strong>Blog posted!</strong>
             </div>
+
+
             <?php
           }
 
@@ -68,6 +73,10 @@ if (isset($_POST['post'])) {
   }
 
 }
+
+
+$categorySql = "SELECT * FROM categories ORDER BY category_name";
+$categoryResult = mysqli_query($conn, $categorySql);
 ?>
 
 <!DOCTYPE html>
@@ -103,14 +112,28 @@ if (isset($_POST['post'])) {
         <input type="text" name="title" class="form-control" id="title" required>
       </div>
 
-      <div class="form-group my-3">
-        <label for="blog-image" class="form-label">Image</label>
-        <input type="file" name="blog-image" id="blog-image" class="form-control">
+      <div class="form-group">
+        <label for="category" class="form-label">Category</label>
+        <select name="category" id="" class="form-select">
+          <option value="<?php echo $d; ?>">Select Category</option>
+          <?php
+          while ($category = mysqli_fetch_assoc($categoryResult)) {
+            ?>
+            <option value="<?php echo $category['category_id']; ?>"><?php echo $category['category_name']; ?></option>
+            <?php
+          }
+          ?>
+        </select>
       </div>
 
       <div class="form-group my-3">
         <label for="excerpt" class="form-label">Excerpt</label>
         <input type="text" name="excerpt" class="form-control" id="excerpt" required>
+      </div>
+
+      <div class="form-group my-3">
+        <label for="blog-image" class="form-label">Image</label>
+        <input type="file" name="blog-image" id="blog-image" class="form-control">
       </div>
 
       <div class="form-group">

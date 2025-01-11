@@ -6,7 +6,7 @@ $user_id = $_SESSION['user_id'];
 
 $getBlogId = $_GET['id'];
 
-$fetchSql = "SELECT * FROM posts WHERE post_id = '$getBlogId'";
+$fetchSql = "SELECT * FROM posts p INNER JOIN users u ON p.user_id = u.user_id WHERE post_id = '$getBlogId'";
 $fetchResult = mysqli_query($conn, $fetchSql);
 
 $data = mysqli_fetch_assoc($fetchResult);
@@ -53,7 +53,9 @@ $row = mysqli_num_rows($selectCommentResult);
 <div class="row mx-3">
 
     <div class="col-12 col-lg-8 mt-4">
+        <p class="h5">Author: <?php echo $data['username']; ?></p>
         <p class="h1 fw-bold"><?php echo $data['title']; ?></p>
+        <p class="h4"><?php echo $data['excerpt'] ?></p>
         <img src="uploads/<?php echo $data['blog_image'] ?>" class="rounded mt-5 mb-5" alt="blog_image">
         <p class="h3"><?php echo $data['content']; ?></p>
     </div>
@@ -64,7 +66,8 @@ $row = mysqli_num_rows($selectCommentResult);
             <div>
 
                 <img src="uploads/<?php echo !empty($userData['profile_picture']) ? $userData['profile_picture'] : 'default.png'; ?>"
-                    alt="profile-image" class='rounded-circle image '>
+                    alt="profile-image" class='rounded-circle image'
+                    style="width: 32px; height: 32px; object-fit: cover;">
 
 
 
@@ -84,10 +87,7 @@ $row = mysqli_num_rows($selectCommentResult);
             </form>
         </div>
         <div>
-            <div class="mt-4 h5 text-danger">
-                Dropdown Sort
-                <hr>
-            </div>
+            <hr>
             <div>
 
                 <?php
@@ -96,7 +96,8 @@ $row = mysqli_num_rows($selectCommentResult);
                     <div class="d-flex gap-2">
                         <div>
                             <img src="uploads/<?php echo !empty($commentData['profile_picture']) ? $commentData['profile_picture'] : 'default.png'; ?>"
-                                alt="profile-image" class='image rounded-circle'>
+                                alt="profile-image" class='image rounded-circle'
+                                style="width: 32px; height: 32px; object-fit: cover;">
 
                         </div>
                         <div>
