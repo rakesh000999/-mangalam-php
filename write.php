@@ -47,8 +47,6 @@ if (isset($_POST['post'])) {
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               <strong>Blog posted!</strong>
             </div>
-
-
             <?php
           }
 
@@ -109,7 +107,7 @@ $categoryResult = mysqli_query($conn, $categorySql);
     <form action="#" method="post" enctype="multipart/form-data" class="shadow p-4 rounded">
       <div class="form-group my-3">
         <label for="title" class="form-label">Title</label>
-        <input type="text" name="title" class="form-control" id="title" required>
+        <input type="text" name="title" class="form-control" id="title">
       </div>
 
       <div class="form-group">

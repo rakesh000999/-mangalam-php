@@ -14,11 +14,10 @@ $searchResult = mysqli_query($conn, $searchSql);
     <?php
     while ($result = mysqli_fetch_assoc($searchResult)) {
         $postId = $result['post_id'];
-    ?>
+        ?>
         <div class="card d-flex m-2 p-2">
             <div>
-                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                    alt="Profile Image" class="image">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Image" class="image">
                 <span>
                     <a href="viewOthersProfile.php" class="text-decoration-none text-dark">
                         <?php echo $result['username']; ?>
@@ -29,11 +28,11 @@ $searchResult = mysqli_query($conn, $searchSql);
                 <div class="d-flex">
                     <div class="w-75">
                         <h2 class="fw-bolder"><?php echo $result['title']; ?></h2>
-                        <h4><?php echo $result['content']; ?></h4>
+                        <h4><?php echo $result['excerpt']; ?></h4>
                     </div>
                     <div class="w-25 object-fit-fill">
-                        <img src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-beach-free-image-after-sunset-sky-free-photo.jpeg?w=600&quality=80"
-                            alt="Blog Image" class="w-100">
+
+                        <img src="uploads/<?php echo $result['blog_image'] ?>" alt="blog_image" class="w-100">
                     </div>
                 </div>
                 <div class="d-flex gap-4">
@@ -42,7 +41,7 @@ $searchResult = mysqli_query($conn, $searchSql);
                 </div>
             </a>
         </div>
-    <?php
+        <?php
     }
     ?>
 </div>
