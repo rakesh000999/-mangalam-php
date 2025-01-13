@@ -10,18 +10,6 @@ $fetchSql = "SELECT p.post_id, u.username, p.title, p.blog_image, p.excerpt, p.c
 
 $fetchResult = mysqli_query($conn, $fetchSql);
 
-// Fetch comment counts grouped by post_id
-$selectComment = "SELECT post_id, COUNT(comment_id) AS comment_count 
-                  FROM comments 
-                  GROUP BY post_id";
-$selectCommentResult = mysqli_query($conn, $selectComment);
-
-// Store comment counts in an associative array
-$commentCounts = [];
-while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
-    $commentCounts[$commentRow['post_id']] = $commentRow['comment_count'];
-}
-
 ?>
 
 <link rel="stylesheet" href="style.css">
@@ -31,9 +19,6 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
         <?php
         while ($result = mysqli_fetch_assoc($fetchResult)) {
             $postId = $result['post_id'];
-
-            // Check if this post has comments, otherwise default to 0
-            $commentCount = isset($commentCounts[$postId]) ? $commentCounts[$postId] : 0;
             ?>
 
             <div class="card d-flex m-2 p-2">
@@ -49,27 +34,52 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
                 </div>
 
                 <a href="read-blog.php?id=<?php echo $postId; ?>" class="text-decoration-none text-dark">
-                    <div class="d-flex gap-4">
+                    <div class="d-flex justify-content-between ">
                         <div class="w-75">
-                            <h3 class="fw-bolder"><?php echo $result['title']; ?></h3>
-                            <h5 class="text-secondary"><?php echo $result['excerpt']; ?></h5>
-                        </div>
-                        <div class="w-25">
-
-                            <img src="uploads/<?php echo $result['blog_image'] ?>" class="rounded " alt="blog_image"
-                                style="width : 150px; height: 120px; object-fit: cover;">
-                        </div>
-                    </div>
-                    <div class="d-flex gap-5 mt-2 justify-content-between align-items-center">
-                        <div class="d-flex gap-4">
-                            <div class="text-secondary"><?php echo $result['created_at']; ?></div>
-                            <div><i class="fa-solid fa-heart"></i> 0</div>
                             <div>
-                                <?php echo ($commentCount === 0) ? '' : '<i class="fa-solid fa-comment"></i> ' . $commentCount; ?>
+                                <h3 class="fw-bolder"><?php echo $result['title']; ?></h3>
+                                <h5 class="text-secondary"><?php echo $result['excerpt']; ?></h5>
+                            </div>
+
+                            <div class="d-flex gap-4 justify-content-between">
+                                <div class="d-flex gap-4">
+                                    <div class="text-secondary"><?php echo $result['created_at']; ?></div>
+                                    <div><i class="fa-solid fa-heart"></i> 0</div>
+                                    <div>
+                                        <?php
+                                        $commentCount = "SELECT COUNT(*) as total FROM comments WHERE post_id = " . $postId;
+                                        $commentCountResult = mysqli_query($conn, $commentCount);
+                                        $commentCountData = mysqli_fetch_assoc($commentCountResult);
+                                        $commentCount = $commentCountData['total'];
+                                        ?>
+
+                                        <i class="fa-solid fa-comment"></i> <?php echo $commentCount ?>
+                                    </div>
+                                </div>
+
+                                <div class="text-secondary">
+                                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li><a class="dropdown-item" href="profile.php">Follow author</a></li>
+                                        <li>
+
+                                            <a class="dropdown-item" href="report.php?postId=<?php echo $postId; ?>">
+                                                Report
+                                            </a>
+
+                                        </li>
+
+                                    </ul>
+
+                                </div>
                             </div>
                         </div>
-                        <div class="text-secondary float-end">
-                            <!-- <i class="fa-solid fa-ellipsis"></i> -->
+                        <div class="w-25">
+                            <img src="uploads/<?php echo $result['blog_image'] ?>" class="rounded " alt="blog_image"
+                                style="width : 150px; height: 120px; object-fit: cover;">
                         </div>
                     </div>
                 </a>
@@ -78,7 +88,6 @@ while ($commentRow = mysqli_fetch_assoc($selectCommentResult)) {
         }
         ?>
     </div>
-
 
     <!-- Top Posts -->
     <?php

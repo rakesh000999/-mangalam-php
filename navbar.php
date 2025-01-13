@@ -50,7 +50,19 @@ $row = mysqli_fetch_assoc($result);
                             </a></button>
                     </div>
                     <div class="">
-                        <i class="fa-regular fa-bell"></i>
+                        <a href="notification.php" class="text-decoration-none text-dark">
+                            <span class="bg-success text-white p-1 " style="
+                                width: 30px; /* Adjust size as needed */
+                                height: 30px; 
+                                border-radius: 50%;
+                                display: inline-flex;
+                                justify-content: center;
+                                align-items: center;
+                            ">
+                                0
+                            </span>
+                            <i class="fa-regular fa-bell"></i>
+                        </a>
                     </div>
                 </div>
                 <li class="nav-item dropdown">

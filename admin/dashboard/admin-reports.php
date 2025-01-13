@@ -3,15 +3,9 @@
 include 'connection.php';
 session_start();
 
-// fix this
+$sql = "SELECT * FROM reports r INNER JOIN users u ON u.user_id = r.user_id INNER JOIN posts p ON p.post_id = r.post_id";
+$sqlResult = mysqli_query($conn, $sql);
 
-
-// if (!isset($_SESSION['user_id'])) {
-//     header('location: ../../login.php');
-// }
-
-$sql = $conn->query("SELECT * FROM users u INNER JOIN user_profiles up ON u.user_id = up.user_id");
-$users = $sql->num_rows;
 ?>
 
 <!DOCTYPE html>
@@ -155,23 +149,17 @@ $users = $sql->num_rows;
                                 </div>
                             </nav>
                         </div>
-                        <!-- <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" href="charts.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Charts
-                            </a>
-                            <a class="nav-link" href="tables.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
-                            </a> -->
+
                     </div>
                 </div>
+
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
                     Admin
                 </div>
             </nav>
         </div>
+
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
@@ -179,82 +167,86 @@ $users = $sql->num_rows;
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
-                    <div class="row">
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Users <?php echo $users ?></div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">Total Posts : 5</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
+
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            Users List
+                            Reported Blogs
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th>Username</th>
-                                        <th>Email</th>
-                                        <th>Bio</th>
-                                        <th>Gender</th>
-                                        <th>Date of Birth</th>
-                                        <th>Address</th>
-                                        <th>Profile Picture</th>
+                                        <th>Reporter</th>
+                                        <th>Blog Title</th>
+                                        <th>Issue</th>
+                                        <th>Description</th>
+                                        <!-- <th>Date of Birth</th>
+                                        <th>Address</th> -->
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
+                                        <th>Reporter</th>
+                                        <th>Blog Title</th>
+                                        <th>Issue</th>
+                                        <th>Description</th>
+                                        <!-- <th>Date of Birth</th>
+                                        <th>Address</th> -->
+                                        <th>Action</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php
-
-                                    while ($row = $sql->fetch_assoc()) {
-
+                                    while ($result = mysqli_fetch_assoc($sqlResult)) {
                                         ?>
                                         <tr>
-                                            <td><?php echo $row['username']; ?></td>
-                                            <td><?php echo $row['email']; ?></td>
-                                            <td><?php echo $row['bio']; ?></td>
-                                            <td><?php echo $row['gender']; ?></td>
-                                            <td><?php echo $row['date_of_birth']; ?></td>
-                                            <td><?php echo $row['location']; ?></td>
+                                            <td><?php echo $result['username'] ?></td>
+                                            <td><?php echo $result['title'] ?></td>
+                                            <td><?php echo $result['issue'] ?></td>
+                                            <td><?php echo $result['description'] ?></td>
                                             <td>
-                                                <img src="../../uploads/<?php echo $row['profile_picture']; ?>" alt=""
-                                                    style="width : 100px; height: 100px; object-fit: cover;">
+                                                <a href="#" class="btn btn-sm btn-primary " onclick="viewBlog();">
+                                                    View Blog
+                                                </a>
                                             </td>
 
-                                            <?php
-                                    }
+                                        </tr>
 
+                                        <?php
+                                    }
                                     ?>
 
                                 </tbody>
                             </table>
                         </div>
                     </div>
+
+                    <div>
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+                        <button id="fetchDataBtn" class="btn btn-success">Fetch Data</button>
+                        <div id="dataContainer"></div>
+
+                        <script>
+                            $(document).ready(function () {
+                                $('#fetchDataBtn').click(function () {
+                                    $.ajax({
+                                        url: 'fetchData.php',
+                                        type: 'GET',
+                                        success: function (response) {
+                                            $('#dataContainer').html(response);
+                                        },
+                                        error: function (error) {
+                                            console.error("Error fetching data", error);
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+                    </div>
+
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">

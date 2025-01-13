@@ -30,7 +30,8 @@ $fetchPostsResult = mysqli_query($conn, $fetchPosts);
                     <a href="read-blog.php?id=<?php echo $postResult['post_id'] ?>" class="text-decoration-none text-dark">
                         <div>
                             <img src="uploads/<?php echo !empty($result['profile_picture']) ? $result['profile_picture'] : 'default.png'; ?>"
-                                alt="profile-image" class='image rounded-circle' style="width: 32px; height: 32px; object-fit: cover;">
+                                alt="profile-image" class='image rounded-circle'
+                                style="width: 32px; height: 32px; object-fit: cover;">
 
                             <span class="text-dark fw-bold"><?php echo $postResult['username'] ?></span>
                         </div>
@@ -47,8 +48,16 @@ $fetchPostsResult = mysqli_query($conn, $fetchPosts);
                         </div>
                         <div class="d-flex gap-4">
                             <div><?php echo $postResult['created_at'] ?></div>
-                            <div>👍1</div>
-                            <div>💬 2</div>
+
+                            <?php
+                            $commentCount = "SELECT COUNT(*) as total FROM comments WHERE post_id = " . $postResult['post_id'];
+                            $commentCountResult = mysqli_query($conn, $commentCount);
+                            $commentCountData = mysqli_fetch_assoc($commentCountResult);
+                            $commentCount = $commentCountData['total'];
+                            ?>
+
+                            <div><i class="fa-solid fa-heart"></i> 0</div>
+                            <div><i class="fa-solid fa-comment"></i> <?php echo $commentCount ?></div>
                         </div>
                     </a>
                 </div>
