@@ -1,7 +1,10 @@
 <?php
-require 'connection.php'; // Include your database connection file
+require 'connection.php'; 
 
-$sql = "SELECT * FROM reports r INNER JOIN users u ON u.user_id = r.user_id INNER JOIN posts p ON p.post_id = r.post_id";
+$post_id = $_GET['post_id'];
+
+$sql = "SELECT * FROM reports r INNER JOIN users u ON u.user_id = r.user_id INNER JOIN posts p ON p.post_id = r.post_id WHERE p.post_id = $post_id";
+
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {

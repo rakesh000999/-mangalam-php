@@ -10,9 +10,6 @@
     width: 300px;
 }
 
-span {
-    color: red;
-}
 
 .form-control:focus {
     box-shadow: none;

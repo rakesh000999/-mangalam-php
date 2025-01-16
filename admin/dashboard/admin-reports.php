@@ -178,37 +178,56 @@ $sqlResult = mysqli_query($conn, $sql);
                                 <thead>
                                     <tr>
                                         <th>Reporter</th>
+                                        <th>Blog Author</th>
                                         <th>Blog Title</th>
                                         <th>Issue</th>
                                         <th>Description</th>
-                                        <!-- <th>Date of Birth</th>
-                                        <th>Address</th> -->
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Reporter</th>
+                                        <th>Blog Author</th>
                                         <th>Blog Title</th>
                                         <th>Issue</th>
                                         <th>Description</th>
-                                        <!-- <th>Date of Birth</th>
-                                        <th>Address</th> -->
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php
+                                    // $i = 0;
                                     while ($result = mysqli_fetch_assoc($sqlResult)) {
+                                        $post_id = $result['post_id'];
+                                        $selectAuthor = "SELECT username from users u INNER JOIN posts p ON u.user_id = p.user_id  WHERE p.post_id = $post_id";
+                                        $selectAuthorResult = mysqli_query($conn, $selectAuthor);
+
+                                        $author = mysqli_fetch_assoc($selectAuthorResult);
+
                                         ?>
                                         <tr>
                                             <td><?php echo $result['username'] ?></td>
+                                            <td><?php echo $author['username'] ?></td>
                                             <td><?php echo $result['title'] ?></td>
                                             <td><?php echo $result['issue'] ?></td>
                                             <td><?php echo $result['description'] ?></td>
                                             <td>
-                                                <a href="#" class="btn btn-sm btn-primary " onclick="viewBlog();">
+
+                                                <a href="#" class="btn btn-sm btn-primary reported-blog"
+                                                    data-post-id="<?php echo $result['post_id']; ?>">
                                                     View Blog
+                                                </a>
+                                                <a href="notify_author.php?user_id=<?php echo $result['user_id'] ?>&post_id=<?php echo $result['post_id'] ?>"
+                                                    class="btn btn-sm btn-warning"
+                                                    data-post-id="<?php echo $result['post_id']; ?>">
+                                                    Notify Author
+                                                </a>
+                                                <a href="delete_reported_blog.php?post_id=<?php echo $result['post_id']; ?>"
+                                                    class="btn btn-sm btn-danger"
+                                                    data-post-id="<?php echo $result['post_id']; ?>"
+                                                    onclick="return confirm('Are you sure? Do you want to delete?');">
+                                                    Delete Blog
                                                 </a>
                                             </td>
 
@@ -224,27 +243,35 @@ $sqlResult = mysqli_query($conn, $sql);
                     </div>
 
                     <div>
-                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-                        <button id="fetchDataBtn" class="btn btn-success">Fetch Data</button>
-                        <div id="dataContainer"></div>
+                        <div id="blog-result" class=""></div>
 
                         <script>
-                            $(document).ready(function () {
-                                $('#fetchDataBtn').click(function () {
-                                    $.ajax({
-                                        url: 'fetchData.php',
-                                        type: 'GET',
-                                        success: function (response) {
-                                            $('#dataContainer').html(response);
-                                        },
-                                        error: function (error) {
-                                            console.error("Error fetching data", error);
+                            // Add event listeners to all links with class 'reported-blog'
+                            document.querySelectorAll('.reported-blog').forEach((element) => {
+                                element.addEventListener('click', function (event) {
+                                    event.preventDefault();  // Prevent default link behavior
+
+                                    // Extract the post_id from the 'data-post-id' attribute
+                                    const postId = this.getAttribute('data-post-id');
+
+                                    // Create an XMLHttpRequest to fetch the blog content
+                                    var xmlhttp = new XMLHttpRequest();
+
+                                    xmlhttp.onreadystatechange = function () {
+                                        if (this.readyState == 4 && this.status == 200) {
+                                            // Insert the response (blog content) into the 'blog-result' div
+                                            document.getElementById("blog-result").innerHTML = this.responseText;
                                         }
-                                    });
+                                    }
+
+                                    // Send the request to fetch the blog content based on the post_id
+                                    xmlhttp.open("GET", "fetchData.php?post_id=" + postId, true);
+                                    xmlhttp.send();
                                 });
                             });
                         </script>
+
                     </div>
 
                 </div>

@@ -2,10 +2,10 @@
 include 'connection.php';
 include 'navbar.php';
 
-$user_id = $_SESSION['user_id'];
+$user_id = $_GET['user_id'];
 
 $fetchSql = "SELECT * FROM users u 
-                    LEFT JOIN user_profiles up 
+                    INNER JOIN user_profiles up 
                     ON u.user_id = up.user_id 
                     WHERE u.user_id = $user_id";
 
@@ -20,7 +20,7 @@ $fetchPostsResult = mysqli_query($conn, $fetchPosts);
 
 <div class="container d-flex">
     <div class="w-75 p-3">
-        <p class="h1 mb-5"><?php echo isset($result['username']) ? $result['username'] : ''; ?></p>
+        <p class="h1 mb-5"><?php echo $result['username']; ?></p>
         <hr>
         <div class="w-75">
             <?php
@@ -76,7 +76,13 @@ $fetchPostsResult = mysqli_query($conn, $fetchPosts);
 
         <p class="h1"><?php echo $result['username']; ?></p>
         <p>1 Follower</p>
-        <a href="edit-profile.php">Edit profile</a>
+        <?php
+        if ($_SESSION['user_id'] == $user_id) {
+            ?>
+            <a href="edit-profile.php">Edit profile</a>
+            <?php
+        }
+        ?>
 
         <p class=""><span class="fw-bold">Bio: </span><?php echo $result['bio']; ?></p>
         <p class=""><span class="fw-bold">Gender: </span><?php echo $result['gender']; ?></p>

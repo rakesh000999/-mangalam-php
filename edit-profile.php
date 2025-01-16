@@ -169,13 +169,13 @@ if (isset($_POST['addprofile'])) {
             </div>
             <div class="form-group">
                 <label for="gender" class="h4 w-100">Gender</label>
-                <input type="radio" id="male" value="m" name="gender" class="" <?php if (!empty($userInfo)) if ($userInfo['gender'] == "m")
+                <input type="radio" id="male" value="Male" name="gender" class="" <?php if (!empty($userInfo)) if ($userInfo['gender'] == "m")
                     echo "checked" ?>>
                         <label for="male">Male</label>
-                        <input type="radio" id="female" value="f" name="gender" class="" <?php if (!empty($userInfo)) if ($userInfo['gender'] == "f")
+                        <input type="radio" id="female" value="Female" name="gender" class="" <?php if (!empty($userInfo)) if ($userInfo['gender'] == "f")
                     echo "checked" ?>>
                         <label for="female">Female</label>
-                        <input type="radio" id="other" value="o" name="gender" class="" <?php if (!empty($userInfo)) if ($userInfo['gender'] == "o")
+                        <input type="radio" id="other" value="Other" name="gender" class="" <?php if (!empty($userInfo)) if ($userInfo['gender'] == "o")
                     echo "checked" ?>>
                         <label for="other">Other</label><br>
                         <span class="error"><?php echo isset($errors['gender']) ? $errors['gender'] : ''; ?></span>

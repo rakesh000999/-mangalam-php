@@ -2,7 +2,7 @@
 include 'connection.php';
 include 'navbar.php';
 
-$fetchSql = "SELECT p.post_id, u.username, p.title, p.blog_image, p.excerpt, p.created_at, profile_picture
+$fetchSql = "SELECT p.post_id, u.user_id, u.username, p.title, p.blog_image, p.excerpt, p.created_at, profile_picture
              FROM posts p
              INNER JOIN users u ON u.user_id = p.user_id
              INNER JOIN user_profiles up ON u.user_id = up.user_id
@@ -27,7 +27,13 @@ $fetchResult = mysqli_query($conn, $fetchSql);
                         alt="Profile Image" class="image rounded-circle" style="width: 32px; height: 32px;">
 
                     <span>
-                        <a href="viewOthersProfile.php" class="text-decoration-none text-dark">
+                        <!-- <a href="viewOthersProfile.php?user_id=<?php echo $result['user_id'] ?>"
+                            class="text-decoration-none text-dark">
+                            <?php echo $result['username']; ?>
+                        </a> -->
+
+                        <a href="viewProfile.php?user_id=<?php echo $result['user_id']; ?>"
+                            class="text-decoration-none text-dark">
                             <?php echo $result['username']; ?>
                         </a>
                     </span>
